@@ -1,47 +1,21 @@
-import React, { useState, useCallback, useEffect, useMemo } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { FiPower, FiClock } from "react-icons/fi";
-import { isToday, format, parseISO, isAfter } from "date-fns";
+import React, { useState, useCallback, useMemo } from "react";
+import { useHistory } from "react-router-dom";
+import { format, parseISO, isAfter } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
-import DayPicker, { DayModifiers } from "react-day-picker";
+import { DayModifiers } from "react-day-picker";
 import "react-day-picker/lib/style.css";
-import Modal from '@material-ui/core/Modal';
 
 
 import api from "../../services/api";
 
 import { useAuth } from "../../hooks/auth";
 
-import logo from "../../assets/logo.svg";
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow
-} from "@material-ui/core";
-
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 
-import Paper from "@material-ui/core/Paper";
-
 import {
   Container,
-  Header,
-  HeaderContent,
-  Profile,
-  Content,
-  Schedule,
-  NextAppointment,
-  Section,
-  Appointment,
-  Calender,
+  Schedule
 } from "./styles";
 
 interface MonthAvailabilityItem {

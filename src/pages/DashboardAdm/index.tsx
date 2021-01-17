@@ -1,22 +1,15 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import ProfileAdm from '../ProfileAdm';
 import { useHistory, Link } from "react-router-dom";
-import { FiPower, FiClock } from "react-icons/fi";
-import { isToday, format, parseISO, isAfter } from "date-fns";
+import { FiPower } from "react-icons/fi";
+import {  format, parseISO, isAfter } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
-import DayPicker, { DayModifiers } from "react-day-picker";
+import { DayModifiers } from "react-day-picker";
 import "react-day-picker/lib/style.css";
 
 import api from "../../services/api";
 
 import { useAuth } from "../../hooks/auth";
-
-
-import { DataGrid, ColDef, ValueGetterParams } from '@material-ui/data-grid';
-
-import { render } from "react-dom";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/styles";
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -30,7 +23,6 @@ import {
 } from "@material-ui/core";
 
 import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
@@ -41,11 +33,7 @@ import {
   HeaderContent,
   Profile,
   Content,
-  Schedule,
-  NextAppointment,
-  Section,
-  Appointment,
-  Calender,
+  Schedule
 } from "./styles";
 
 interface MonthAvailabilityItem {

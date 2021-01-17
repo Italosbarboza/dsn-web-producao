@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { FiArrowLeft, FiUser, FiMail, FiLock } from "react-icons/fi";
+import { useHistory } from "react-router-dom";
+import { FiUser, FiMail, FiLock } from "react-icons/fi";
 import { Form } from "@unform/web";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";

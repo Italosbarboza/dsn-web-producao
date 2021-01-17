@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { FiPower, FiClock } from "react-icons/fi";
-import { isToday, format, parseISO, isAfter } from "date-fns";
+import { FiPower } from "react-icons/fi";
+import { format, parseISO, isAfter } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
-import DayPicker, { DayModifiers } from "react-day-picker";
+import { DayModifiers } from "react-day-picker";
 import "react-day-picker/lib/style.css";
 import Modal from '@material-ui/core/Modal';
 
@@ -11,8 +11,6 @@ import Modal from '@material-ui/core/Modal';
 import api from "../../services/api";
 
 import { useAuth } from "../../hooks/auth";
-
-import logo from "../../assets/logo.svg";
 
 import {
   Table,
@@ -39,11 +37,7 @@ import {
   HeaderContent,
   Profile,
   Content,
-  Schedule,
-  NextAppointment,
-  Section,
-  Appointment,
-  Calender,
+  Schedule
 } from "./styles";
 
 interface MonthAvailabilityItem {
