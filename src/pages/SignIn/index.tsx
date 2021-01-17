@@ -74,7 +74,7 @@ const SignIn: React.FC = () => {
         });*/
       }
     },
-    [],
+    [history, signIn, user.acesso],
   );
 
   return (

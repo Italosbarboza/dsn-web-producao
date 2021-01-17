@@ -8,7 +8,6 @@ import * as Yup from "yup";
 import api from "../../services/api";
 
 import { useToast } from "../../hooks/toast";
-import { useAuth } from "../../hooks/auth";
 
 import getValidationErrors from "../../utils/getValidationErrors";
 
