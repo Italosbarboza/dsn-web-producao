@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState, ChangeEvent, useEffect } from "react";
+import React, { useCallback, useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { FiUser, FiMail, FiLock } from "react-icons/fi";
 import { Form } from "@unform/web";

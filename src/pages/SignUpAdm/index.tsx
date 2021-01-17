@@ -29,7 +29,7 @@ interface SignUpFormData {
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
 
   const [loading, setLoading] = useState(false);
 

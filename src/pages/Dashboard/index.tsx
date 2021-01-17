@@ -113,7 +113,7 @@ const Dashboard: React.FC = () => {
       history.push("/dashboard-adm");
     }
 
-  }, [user.id]);
+  }, [history, user]);
 
   function rand() {
     return Math.round(Math.random() * 20) - 10;

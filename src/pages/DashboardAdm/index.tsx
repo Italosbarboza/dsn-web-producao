@@ -125,7 +125,7 @@ const Dashboard: React.FC = () => {
       history.push("/dashboard");
     }
 
-  }, [user.id]);
+  }, [history, user]);
 
   return (
     <Container>

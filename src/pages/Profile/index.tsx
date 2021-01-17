@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState, ChangeEvent } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { FiUser, FiMail, FiLock, FiCamera, FiArrowLeft } from "react-icons/fi";
+import { FiUser, FiMail, FiLock, FiArrowLeft } from "react-icons/fi";
 import { Form } from "@unform/web";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
@@ -15,7 +15,7 @@ import getValidationErrors from "../../utils/getValidationErrors";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
-import { Container, Content, AvatarInput } from "./styles";
+import { Container, Content } from "./styles";
 
 interface ProfileFormData {
   name: string;
@@ -122,26 +122,6 @@ const Profile: React.FC = () => {
       }
     },
     [addToast, history, updateUser],
-  );
-
-  const handleAvatarChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files) {
-        const data = new FormData();
-
-        data.append("avatar", e.target.files[0]);
-
-        api.patch("/users/avatar", data).then(response => {
-          updateUser(response.data);
-
-          addToast({
-            type: "success",
-            title: "Avatar atualizado",
-          });
-        });
-      }
-    },
-    [addToast, updateUser],
   );
 
   return (

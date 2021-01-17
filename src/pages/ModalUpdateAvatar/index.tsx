@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "react-day-picker/lib/style.css";
 import api from "../../services/api";
