@@ -42,7 +42,6 @@ const Profile: React.FC<{title:string | undefined}> =  ({children, title}) => {
   const [userEdit, setUserEdit] = useState<UserEdit>({} as UserEdit);
 
   const { addToast } = useToast();
-  const { updateUser } = useAuth();
 
   const history = useHistory();
 

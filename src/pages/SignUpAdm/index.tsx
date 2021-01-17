@@ -41,7 +41,7 @@ const SignUp: React.FC = () => {
     if(user && user.acesso !== '1') {
       history.push("/dashboard");
     }
-  }, [history]);
+  }, []);
 
   const handleSubmit = useCallback(
     async (data: SignUpFormData) => {
