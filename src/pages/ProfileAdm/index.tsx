@@ -15,7 +15,7 @@ import getValidationErrors from "../../utils/getValidationErrors";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
-import { Container, Content, AvatarInput } from "./styles";
+import { Container, Content } from "./styles";
 
 interface ProfileFormData {
   name: string;
@@ -23,10 +23,6 @@ interface ProfileFormData {
   old_password: string;
   password: string;
   password_confirmation: string;
-}
-
-interface User {
-  id_user: string;
 }
 
 interface UserEdit {
@@ -46,7 +42,7 @@ const Profile: React.FC<{title:string | undefined}> =  ({children, title}) => {
   const [userEdit, setUserEdit] = useState<UserEdit>({} as UserEdit);
 
   const { addToast } = useToast();
-  const { user, updateUser } = useAuth();
+  const { updateUser } = useAuth();
 
   const history = useHistory();
 
@@ -89,28 +85,6 @@ const Profile: React.FC<{title:string | undefined}> =  ({children, title}) => {
 
         setLoading(true);
 
-        const {
-          name,
-          email,
-          old_password,
-          password,
-          password_confirmation,
-        } = data;
-
-        const formData = {
-          name,
-          email,
-          ...(old_password
-            ? {
-                old_password,
-                password,
-                password_confirmation,
-              }
-            : {}),
-        };
-
-        const response = await api.put(`/profile/adm/${title}`, formData);
-
         history.push("/dashboard-adm");
 
         addToast({
@@ -143,26 +117,6 @@ const Profile: React.FC<{title:string | undefined}> =  ({children, title}) => {
       }
     },
     [addToast, history, updateUser],
-  );
-
-  const handleAvatarChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files) {
-        const data = new FormData();
-
-        data.append("avatar", e.target.files[0]);
-
-        api.patch("/users/avatar", data).then(response => {
-          updateUser(response.data);
-
-          addToast({
-            type: "success",
-            title: "Avatar atualizado",
-          });
-        });
-      }
-    },
-    [addToast, updateUser],
   );
 
   return (

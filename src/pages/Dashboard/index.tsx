@@ -1,9 +1,6 @@
-import React, { useState, useCallback, useEffect, useMemo } from "react";
+import React, { useState,  useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { FiPower } from "react-icons/fi";
-import { format, parseISO, isAfter } from "date-fns";
-import ptBR from "date-fns/locale/pt-BR";
-import { DayModifiers } from "react-day-picker";
 import "react-day-picker/lib/style.css";
 import Modal from '@material-ui/core/Modal';
 
@@ -40,21 +37,6 @@ import {
   Schedule
 } from "./styles";
 
-interface MonthAvailabilityItem {
-  day: number;
-  available: boolean;
-}
-
-interface Appointments {
-  id: string;
-  date: string;
-  hourFormatted: string;
-  user: {
-    name: string;
-    avatar_url: string;
-  };
-}
-
 interface Files {
   id_arquivo: number;
   cod_user: string;
@@ -82,21 +64,6 @@ const Dashboard: React.FC = () => {
   const { user, signOut } = useAuth();
 
   const [files, setFiles] = useState<Files[]>([]);
-
-
-  const state = {
-    items: [
-      {
-        name: "foo"
-      },
-      {
-        name: "bar"
-      },
-      {
-        name: "baz"
-      }
-    ]
-  };
 
   function deleteItem(i: number) {
     const id: number = files[i].id_arquivo;
@@ -126,8 +93,6 @@ const Dashboard: React.FC = () => {
     //setOpen(true);
   };
   
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [currentMonth, setCurrentMonth] = useState(new Date());
   const [idEdit, SetIdEdit] = useState<string>();
 
 
@@ -138,24 +103,9 @@ const Dashboard: React.FC = () => {
     setOpen(false);
   };
 
-  const [monthAvailability, setMonthAvailability] = useState<
-    MonthAvailabilityItem[]
-  >([]);
-  const [appointments, setAppointments] = useState<Appointments[]>([]);
   const [cardFile, setCardFile] = useState<any>();
 
-
-  const handleDateChange = useCallback((day: Date, modifiers: DayModifiers) => {
-    if (modifiers.available && !modifiers.disabled) {
-      setSelectedDate(day);
-    }
-  }, []);
-
   const history = useHistory();
-
-  const handleMonthChange = useCallback((month: Date) => {
-    setCurrentMonth(month);
-  }, []);
 
   useEffect(() => {
 
@@ -163,22 +113,7 @@ const Dashboard: React.FC = () => {
       history.push("/dashboard-adm");
     }
 
-    api
-      .get(`/providers/${user.id}/month-availability`, {
-        params: {
-          year: currentMonth.getFullYear(),
-          month: currentMonth.getMonth() + 1,
-        },
-      })
-      .then(response => {
-        setMonthAvailability(response.data);
-      });
-      api
-      .get(`/files`)
-      .then(response => {
-        setFiles(response.data);
-      });
-  }, [currentMonth, user.id]);
+  }, [user.id]);
 
   function rand() {
     return Math.round(Math.random() * 20) - 10;
@@ -204,49 +139,6 @@ const Dashboard: React.FC = () => {
       <ModalUpdateAvatar title={idEdit}/>
     </div>
   );
-  
-  const disabledDays = useMemo(() => {
-    const dates = monthAvailability
-      .filter(monthDay => monthDay.available === false)
-      .map(monthDay => {
-        const year = currentMonth.getFullYear();
-        const month = currentMonth.getMonth();
-
-        return new Date(year, month, monthDay.day);
-      });
-
-    return dates;
-  }, [currentMonth, monthAvailability]);
-
-  const selectedDateAsText = useMemo(() => {
-    return format(selectedDate, "'Dia' dd 'de' MMMM", {
-      locale: ptBR,
-    });
-  }, [selectedDate]);
-
-  const selectedWeekDay = useMemo(() => {
-    return format(selectedDate, "cccc", {
-      locale: ptBR,
-    });
-  }, [selectedDate]);
-
-  const morningAppointments = useMemo(() => {
-    return appointments.filter(appointment => {
-      return parseISO(appointment.date).getHours() < 12;
-    });
-  }, [appointments]);
-
-  const afternoonAppointments = useMemo(() => {
-    return appointments.filter(appointment => {
-      return parseISO(appointment.date).getHours() >= 12;
-    });
-  }, [appointments]);
-
-  const nextAppointment = useMemo(() => {
-    return appointments.find(appointment =>
-      isAfter(parseISO(appointment.date), new Date()),
-    );
-  }, [appointments]);
 
   const handleUploadFile = (e: any) => setCardFile(e.target.files[0]);
 

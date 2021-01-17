@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { DayModifiers } from "react-day-picker";
+import { Link } from "react-router-dom";
 import "react-day-picker/lib/style.css";
 import Valido from "./valido";
 import Invalido from "./invalido";
@@ -26,27 +25,6 @@ import {
   Schedule
 } from "./styles";
 
-interface MonthAvailabilityItem {
-  day: number;
-  available: boolean;
-}
-
-interface Appointments {
-  id: string;
-  date: string;
-  hourFormatted: string;
-  user: {
-    name: string;
-    avatar_url: string;
-  };
-}
-
-interface Files {
-  id_arquivo: number;
-  cod_user: string;
-  nome_arquivo: string;
-}
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
@@ -65,38 +43,17 @@ const Dashboard: React.FC = () => {
 
   const classes = useStyles();
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [idEdit, SetIdEdit] = useState<string>();
   const [valueFile, SetValueFile] = useState<string>();
-  const [valueMotivo, SetMotivo] = useState<string>();
   const [valido, SetValido] = useState<boolean>();
   const [modalStyle] = React.useState(getModalStyle);
 
   const [open, setOpen] = React.useState(false);
 
-
-  const [monthAvailability, setMonthAvailability] = useState<
-    MonthAvailabilityItem[]
-  >([]);
-  const [appointments, setAppointments] = useState<Appointments[]>([]);
   const [cardFile, setCardFile] = useState<any>();
 
 
-  const handleDateChange = useCallback((day: Date, modifiers: DayModifiers) => {
-    if (modifiers.available && !modifiers.disabled) {
-      setSelectedDate(day);
-    }
-  }, []);
-
-  const history = useHistory();
-
   function handleChange(e: any) {
     SetValueFile(e.target.value);
-  }
-
-  function handleChangeMotivo(e: any) {
-    SetMotivo(e.target.value);
   }
 
 
@@ -223,7 +180,6 @@ const Dashboard: React.FC = () => {
           multiline
           style={{ width: '102%'}}
           rows={12}
-          onChange={e => handleChangeMotivo(e)}
           defaultValue="Motivo"
           variant="filled"
         />
