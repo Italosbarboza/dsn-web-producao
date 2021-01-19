@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.js": "/static/js/main.0f50488b.chunk.js",
+    "main.js.map": "/static/js/main.0f50488b.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.1f1f19a3.js",
+    "runtime-main.js.map": "/static/js/runtime-main.1f1f19a3.js.map",
+    "static/css/2.c6231af7.chunk.css": "/static/css/2.c6231af7.chunk.css",
+    "static/js/2.a5d63761.chunk.js": "/static/js/2.a5d63761.chunk.js",
+    "static/js/2.a5d63761.chunk.js.map": "/static/js/2.a5d63761.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.e71fefc31bd36ded6c6c49b4b06548f5.js": "/precache-manifest.e71fefc31bd36ded6c6c49b4b06548f5.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.c6231af7.chunk.css.map": "/static/css/2.c6231af7.chunk.css.map",
+    "static/js/2.a5d63761.chunk.js.LICENSE.txt": "/static/js/2.a5d63761.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/static/media/logo.cb3c3e0d.svg",
+    "static/media/sign-in-background.png": "/static/media/sign-in-background.6eac314f.png",
+    "static/media/validador.png": "/static/media/validador.72b44bdf.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1f1f19a3.js",
+    "static/css/2.c6231af7.chunk.css",
+    "static/js/2.a5d63761.chunk.js",
+    "static/js/main.0f50488b.chunk.js"
+  ]
+}
