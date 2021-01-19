@@ -113,6 +113,14 @@ const Dashboard: React.FC = () => {
       history.push("/dashboard-adm");
     }
 
+    api
+    .get(`/files`)
+    .then(response => {
+      console.log(response.data);
+      setFiles(response.data);
+    });
+    
+
   }, [history, user]);
 
   function rand() {
@@ -148,7 +156,6 @@ const Dashboard: React.FC = () => {
     data.append("avatar", cardFile);
 
     const newFile = files;
-
     api
     .patch(`/files/avatar/`, data)
     .then(response => {
