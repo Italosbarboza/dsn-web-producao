@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import "react-day-picker/lib/style.css";
 import Valido from "./valido";
 import Invalido from "./invalido";
-
 
 
 import api from "../../services/api";
@@ -24,6 +23,7 @@ import {
   Content,
   Schedule
 } from "./styles";
+import { timeStamp } from "console";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,16 +44,24 @@ const Dashboard: React.FC = () => {
   const classes = useStyles();
 
   const [valueFile, SetValueFile] = useState<string>();
+  const [motivo, SetMotivo] = useState<string>();
   const [valido, SetValido] = useState<boolean>();
   const [modalStyle] = React.useState(getModalStyle);
 
   const [open, setOpen] = React.useState(false);
+  const data = new FormData();
+
 
   const [cardFile, setCardFile] = useState<any>();
+  const history = useHistory();
 
 
   function handleChange(e: any) {
     SetValueFile(e.target.value);
+  }
+
+  function handleChangeMotivo(e: any) {
+    SetMotivo(e.target.value);
   }
 
 
@@ -105,10 +113,10 @@ const Dashboard: React.FC = () => {
   };
 
   const addNewCard = async () => {
-    const data = new FormData();
+  
     data.append("avatar", cardFile);
 
-    api
+    await api
     .post(`/files/arquivo/${valueFile}`, data)
     .then(response => {
         if(response.data) {
@@ -120,9 +128,28 @@ const Dashboard: React.FC = () => {
         }
     }).catch(function (error) {
       if (error.response) {
-        // Request made and server responded
-        alert('Arquivo não existe, código do arquivo pode está errado'); 
+        alert('Arquivo inexistente');
+        SetValido(false);
     }})
+    
+    let newDate = new Date();
+    
+    await api
+    .put('/files/cache', {
+      file: valueFile,
+      hash: newDate,
+      motivation: motivo,
+      validation: valido
+    })
+    .then(response => {
+        console.log(response.data);
+    }).catch(function (error) {
+      if (error.response) {
+        // Request made and server responded
+    }})
+
+    history.push('/autenticacao');
+    
     
 
     // ------------------------------------------------------------
@@ -177,6 +204,7 @@ const Dashboard: React.FC = () => {
           <TextField
           id="filled-multiline-static"
           label="Motivo para a autenticação"
+          onChange={e => handleChangeMotivo(e)}
           multiline
           style={{ width: '102%'}}
           rows={12}

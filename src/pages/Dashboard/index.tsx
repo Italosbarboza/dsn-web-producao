@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { FiPower } from "react-icons/fi";
 import "react-day-picker/lib/style.css";
 import Modal from '@material-ui/core/Modal';
-
+import ModalLog from '@material-ui/core/Modal';
 
 import api from "../../services/api";
 
@@ -18,6 +18,7 @@ import {
 } from "@material-ui/core";
 
 import ModalUpdateAvatar from '../ModalUpdateAvatar';
+import ModalLogAvatar from '../ModalLogAvatar';
 
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -63,6 +64,7 @@ const Dashboard: React.FC = () => {
 
   const { user, signOut } = useAuth();
 
+  const [log, setLog] = useState<boolean>();
   const [files, setFiles] = useState<Files[]>([]);
 
   function deleteItem(i: number) {
@@ -77,6 +79,14 @@ const Dashboard: React.FC = () => {
   }
 
   const handleOpen = (i: number) => {
+    let idFiles = files[i].id_arquivo;
+    SetIdEdit(String(idFiles));
+    setLog(false);
+    setOpen(true);
+  };
+
+  const handleOpenLog = (i: number) => {
+    setLog(true);
     let idFiles = files[i].id_arquivo;
     SetIdEdit(String(idFiles));
     setOpen(true);
@@ -138,15 +148,29 @@ const Dashboard: React.FC = () => {
     };
   }
 
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
-      <ModalUpdateAvatar title={idEdit}/>
-    </div>
-  );
+  let body: any = null;
+
+  if(!log) {
+    body = (
+      <div style={modalStyle} className={classes.paper}>
+        <h2 id="simple-modal-title">Text in a modal</h2>
+        <p id="simple-modal-description">
+          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+        </p>
+          <ModalUpdateAvatar title={idEdit}/>
+      </div>
+    );
+  } else {
+    body = (
+      <div style={modalStyle} className={classes.paper}>
+        <h2 id="simple-modal-title">Text in a modal</h2>
+        <p id="simple-modal-description">
+          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+        </p>
+          <ModalLogAvatar title={idEdit}/>
+      </div>
+    );
+  }
 
   const handleUploadFile = (e: any) => setCardFile(e.target.files[0]);
 
@@ -214,6 +238,7 @@ const Dashboard: React.FC = () => {
               <TableCell>Visualizar</TableCell>
               <TableCell>Deletar</TableCell>
               <TableCell>Atualizar</TableCell>
+              <TableCell>Log</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -248,8 +273,18 @@ const Dashboard: React.FC = () => {
                     >
                       Atualizar
                     </EditIcon>
-                 </TableCell>
+                    </TableCell>
+                    <TableCell>
 
+                    <EditIcon
+                      type='button'
+                      onClick={() => handleOpenLog(i)}
+                      color="secondary"
+                    >
+                      Log
+                    </EditIcon>
+
+                    </TableCell>
 
                  <Modal
         open={open}
@@ -267,83 +302,6 @@ const Dashboard: React.FC = () => {
           </TableBody>
         </Table>
       </Paper>
-          {/*
-          <p>
-            {isToday(selectedDate) && <span>Hoje</span>}
-            <span>{selectedDateAsText}</span>
-            <span>{selectedWeekDay}</span>
-          </p>
-
-          {isToday(selectedDate) && nextAppointment && (
-            <NextAppointment>
-              <strong>Agendamento a seguir</strong>
-              <div>
-                <img
-                  src={nextAppointment.user.avatar_url}
-                  alt={nextAppointment.user.name}
-                />
-
-                <strong>{nextAppointment.user.name}</strong>
-                <span>
-                  <FiClock />
-                  {nextAppointment.hourFormatted}
-                </span>
-              </div>
-            </NextAppointment>
-          )}
-
-          <Section>
-            <strong>Manhã</strong>
-
-            {morningAppointments.length === 0 && (
-              <p>Nenhum agendamento no horário da manhã</p>
-            )}
-
-            {morningAppointments.map(appointment => (
-              <Appointment key={appointment.id}>
-                <span>
-                  <FiClock />
-                  {appointment.hourFormatted}
-                </span>
-
-                <div>
-                  <img
-                    src={appointment.user.avatar_url}
-                    alt={appointment.user.name}
-                  />
-
-                  <strong>{appointment.user.name}</strong>
-                </div>
-              </Appointment>
-            ))}
-          </Section>
-
-          <Section>
-            <strong>Tarde</strong>
-
-            {afternoonAppointments.length === 0 && (
-              <p>Nenhum agendamento no horário da tarde</p>
-            )}
-
-            {afternoonAppointments.map(appointment => (
-              <Appointment key={appointment.id}>
-                <span>
-                  <FiClock />
-                  {appointment.hourFormatted}
-                </span>
-
-                <div>
-                  <img
-                    src={appointment.user.avatar_url}
-                    alt={appointment.user.name}
-                  />
-
-                  <strong>{appointment.user.name}</strong>
-                </div>
-              </Appointment>
-            ))}
-          </Section>
-            */}
         </Schedule>
           {/*
         <Calender>

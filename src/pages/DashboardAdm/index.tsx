@@ -53,8 +53,15 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Dashboard: React.FC = () => {
+interface Users {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+}
 
+const Dashboard: React.FC = () => {
+  const galinha: Users = {id:1, name:'Italo', email:'e', password: 'e'}
 
   const classes = useStyles();
 
@@ -125,6 +132,13 @@ const Dashboard: React.FC = () => {
       history.push("/dashboard");
     }
 
+    api
+    .get(`/profile/all`)
+    .then(response => {
+      setUsers(response.data);
+      console.log(response.data);
+    });
+
   }, [history, user]);
 
   return (
@@ -173,7 +187,7 @@ const Dashboard: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((item, i) => {
+            {!users ? null : users.map((item, i) => {
               return (
                 <TableRow key={`row-${i}`}>
                   <TableCell>{item.name}</TableCell>
